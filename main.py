@@ -15,6 +15,7 @@ sqlite_file_name = "database.db"
 sqlite_url = f"sqlite:///{sqlite_file_name}"
 engine = create_engine(sqlite_url, connect_args={"check_same_thread": False})
 
+
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
 
@@ -30,6 +31,11 @@ def on_startup():
     create_db_and_tables()
 
 # --- RUTAS DE LA API ---
+
+# Ruta principal de bienvenida
+@app.get("/")
+def inicio():
+    return {"mensaje": "Bienvenido a mi API en Render. Visitá /docs para interactuar."}
 
 # Crear un servicio (CREATE)
 @app.post("/servicios", response_model=Servicio, status_code=201)
